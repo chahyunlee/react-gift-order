@@ -1,58 +1,28 @@
-import { useState } from "react";
+import { useInput } from "@/hooks/useInput";
 import {
   checkEmailValidation,
   checkPasswordValidation,
 } from "@/utils/checkValidation";
 
 export const useLoginFormValidation = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [emailError, setEmailError] = useState<string | null>("");
-  const [passwordError, setPasswordError] = useState<string | null>("");
-
-  const [emailTouched, setEmailTouched] = useState(false);
-  const [passwordTouched, setPasswordTouched] = useState(false);
-
-  const handleEmailInput = (value: string) => {
-    setEmail(value);
-    if (emailTouched) {
-      setEmailError(checkEmailValidation(value));
-    }
-  };
-
-  const handleEmailBlur = () => {
-    setEmailTouched(true);
-    setEmailError(checkEmailValidation(email));
-  };
-
-  const handlePasswordInput = (value: string) => {
-    setPassword(value);
-    if (passwordTouched) {
-      setPasswordError(checkPasswordValidation(value));
-    }
-  };
-
-  const handlePasswordBlur = () => {
-    setPasswordTouched(true);
-    setPasswordError(checkPasswordValidation(password));
-  };
+  const emailInput = useInput({ validation: checkEmailValidation });
+  const passwordInput = useInput({ validation: checkPasswordValidation });
 
   const isValid =
-    Boolean(email) &&
-    Boolean(password) &&
-    emailError === null &&
-    passwordError === null;
+    Boolean(emailInput.value) &&
+    Boolean(passwordInput.value) &&
+    emailInput.error === null &&
+    passwordInput.error === null;
 
   return {
-    email,
-    password,
-    emailError,
-    passwordError,
-    handleEmailInput,
-    handleEmailBlur,
-    handlePasswordInput,
-    handlePasswordBlur,
+    email: emailInput.value,
+    password: passwordInput.value,
+    emailError: emailInput.error,
+    passwordError: passwordInput.error,
+    handleEmailInput: emailInput.handleInput,
+    handleEmailBlur: emailInput.handleBlur,
+    handlePasswordInput: passwordInput.handleInput,
+    handlePasswordBlur: passwordInput.handleBlur,
     isValid,
   };
 };
