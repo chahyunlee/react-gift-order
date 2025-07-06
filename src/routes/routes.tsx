@@ -3,6 +3,7 @@ import { RouterPath } from "@/routes/path";
 import HomePage from "@/pages/Home/Home";
 import LoginPage from "@/pages/Login/Login";
 import NotFoundPage from "@/pages/NotFoundPage/NotFoundPage";
+import MyPage from "@/pages/MyPage/MyPage";
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,11 @@ const router = createBrowserRouter([
   {
     path: RouterPath.LOGIN,
     element: <LoginPage />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: RouterPath.MYPAGE,
+    element: <MyPage />,
     errorElement: <NotFoundPage />,
   },
 ]);
