@@ -11,29 +11,30 @@ const MyPage = () => {
 
   useEffect(() => {
     if (!auth?.user) {
-      navigate(RouterPath.LOGIN);
+      navigate(RouterPath.LOGIN, { replace: true });
     }
   }, [auth, navigate]);
 
   if (!auth?.user) return null;
+
+  const userEmail = auth.user.email;
+  const userId = userEmail.split("@")[0];
+
+  const handleLogout = () => {
+    auth.logout();
+    navigate(RouterPath.LOGIN);
+  };
 
   return (
     <>
       <NavigationBar />
       <Title>마이페이지</Title>
       <Description>
-        사용자님 안녕하세요!
+        {userId}님 안녕하세요!
         <br />
-        이메일 주소는 사용자이메일입니다.
+        이메일 주소는 {userEmail}입니다.
       </Description>
-      <LogoutButton
-        onClick={() => {
-          auth.logout();
-          navigate(RouterPath.LOGIN);
-        }}
-      >
-        로그아웃
-      </LogoutButton>
+      <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
     </>
   );
 };
