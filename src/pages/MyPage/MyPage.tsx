@@ -1,7 +1,22 @@
+import { useContext, useEffect } from "react";
+import { AuthContext } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { RouterPath } from "@/routes/path";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import { Title, Description, LogoutButton } from "@/pages/MyPage/MyPage.style";
 
 const MyPage = () => {
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!auth?.user) {
+      navigate(RouterPath.LOGIN);
+    }
+  }, [auth, navigate]);
+
+  if (!auth?.user) return null;
+
   return (
     <>
       <NavigationBar />
@@ -11,7 +26,14 @@ const MyPage = () => {
         <br />
         이메일 주소는 사용자이메일입니다.
       </Description>
-      <LogoutButton>로그아웃</LogoutButton>
+      <LogoutButton
+        onClick={() => {
+          auth.logout();
+          navigate(RouterPath.LOGIN);
+        }}
+      >
+        로그아웃
+      </LogoutButton>
     </>
   );
 };

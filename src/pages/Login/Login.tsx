@@ -1,5 +1,7 @@
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { RouterPath } from "@/routes/path";
+import { AuthContext } from "@/context/AuthContext";
 import logo from "@/assets/images/logo.png";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import {
@@ -13,6 +15,7 @@ import {
 import { useLoginFormValidation } from "@/hooks/useLoginFormValidation";
 
 const LoginPage = () => {
+  const auth = useContext(AuthContext);
   const navigate = useNavigate();
   const {
     email,
@@ -26,15 +29,21 @@ const LoginPage = () => {
     isValid,
   } = useLoginFormValidation();
 
+  useEffect(() => {
+    if (auth?.user) {
+      navigate(RouterPath.MYPAGE);
+    }
+  }, [auth, navigate]);
+
   const handleLoginClick = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isValid) {
-      localStorage.setItem("isLoggedIn", "true");
+    if (isValid && auth) {
+      auth.login({ email });
       const hasPrev = window.history.length;
       if (hasPrev > 1) {
         navigate(-1);
       } else {
-        navigate(RouterPath.HOME);
+        navigate(RouterPath.MYPAGE);
       }
     }
   };
