@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { RouterPath } from "@/routes/path";
 import { AuthContext } from "@/context/AuthContext";
 import logo from "@/assets/images/logo.png";
@@ -17,6 +17,7 @@ import { useLoginFormValidation } from "@/hooks/useLoginFormValidation";
 const LoginPage = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     email,
     password,
@@ -31,20 +32,17 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (auth?.user) {
-      navigate(RouterPath.MYPAGE);
+      const redirectTo = location.state?.from || RouterPath.MYPAGE;
+      navigate(redirectTo, { replace: true });
     }
-  }, [auth, navigate]);
+  }, [auth, navigate, location.state]);
 
   const handleLoginClick = (e: React.FormEvent) => {
     e.preventDefault();
     if (isValid && auth) {
       auth.login({ email });
-      const hasPrev = window.history.length;
-      if (hasPrev > 1) {
-        navigate(-1);
-      } else {
-        navigate(RouterPath.MYPAGE);
-      }
+      const redirectTo = location.state?.from || RouterPath.MYPAGE;
+      navigate(redirectTo, { replace: true });
     }
   };
 
