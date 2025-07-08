@@ -1,12 +1,15 @@
 import { useState } from "react";
 
 interface UseInputProps {
-  initailValue?: string;
+  initialValue?: string;
   validation?: (value: string) => string | null;
 }
 
-export const useInput = ({ validation }: UseInputProps = {}) => {
-  const [value, setValue] = useState("");
+export const useInput = ({
+  initialValue = "",
+  validation,
+}: UseInputProps = {}) => {
+  const [value, setValue] = useState(initialValue);
   const [error, setError] = useState<string | null>("");
   const [touched, setTouched] = useState(false);
 

@@ -44,7 +44,10 @@ const OrderPage = () => {
   const senderNameInput = useInput({ validation: checkNameValidation });
   const getterNameInput = useInput({ validation: checkNameValidation });
   const getterPhoneInput = useInput({ validation: checkPhoneValidation });
-  const messageInput = useInput({ validation: checkMessageValidation });
+  const messageInput = useInput({
+    initialValue: OrderCardData[0].defaultTextMessage,
+    validation: checkMessageValidation,
+  });
 
   const handleSelectedMessage = (idx: number) => {
     setSelectedIdx(idx);
