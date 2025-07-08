@@ -32,6 +32,7 @@ export const Input = styled.input`
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray600};
   }
 `;
+
 export const LoginButton = styled.button<{ isValid?: boolean }>`
   background: ${({ theme, isValid }) =>
     isValid ? theme.colors.kakaoYellow : theme.colors.backgroundDisabled};

@@ -58,7 +58,7 @@ const RankingSection = () => {
     params.set("rankType", rank);
     setSearchParams(params);
   };
-
+  
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -69,7 +69,6 @@ const RankingSection = () => {
       navigate(`/order/${cardId}`);
     }
   };
-
   return (
     <Wrapper>
       <Title>실시간 급상승 선물랭킹</Title>

@@ -15,6 +15,7 @@ export interface CardProps {
   name: string;
   price: number;
   onClick?: () => void;
+
 }
 
 export default function Card({
