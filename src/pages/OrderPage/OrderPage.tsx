@@ -22,6 +22,7 @@ import {
   ProductTitle,
   ProductBrand,
   ProductPrice,
+  FixedOrderButton,
 } from "@/pages/OrderPage/OrderPage.style";
 import { useState } from "react";
 
@@ -31,6 +32,8 @@ const OrderPage = () => {
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams<{ id: string }>();
   const product = cardData.find((item) => String(item.id) === String(id));
+  const sellingPrice = product?.price?.sellingPrice ?? 0;
+  const totalPrice = sellingPrice * quantity;
 
   const handleSelectedMessage = (idx: number) => {
     setSelectedIdx(idx);
@@ -118,12 +121,13 @@ const OrderPage = () => {
               <ProductTitle>{product.name}</ProductTitle>
               <ProductBrand>{product.brandInfo.name}</ProductBrand>
               <ProductPrice>
-                상품가 <b>{product.price.sellingPrice.toLocaleString()}원</b>
+                상품가 <b>{product.price.sellingPrice}원</b>
               </ProductPrice>
             </ProductInfo>
           </ProductCard>
         )}
       </ProductInfoSection>
+      <FixedOrderButton>{totalPrice}원 주문하기</FixedOrderButton>
     </>
   );
 };

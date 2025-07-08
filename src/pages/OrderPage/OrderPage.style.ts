@@ -110,8 +110,11 @@ export const SectionDivider = styled.div`
 `;
 
 export const ProductInfoSection = styled.section`
-  padding: 0 ${({ theme }) => theme.spacing.spacing6};
+  padding: 0 ${({ theme }) => theme.spacing.spacing6}
+    ${({ theme }) => theme.spacing.spacing16}
+    ${({ theme }) => theme.spacing.spacing6};
   margin-top: ${({ theme }) => theme.spacing.spacing6};
+  margin-bottom: ${({ theme }) => theme.spacing.spacing5};
 `;
 
 export const ProductCard = styled.div`
@@ -153,4 +156,18 @@ export const ProductPrice = styled.div`
   b {
     font-weight: ${({ theme }) => theme.typography.body2Bold.fontWeight};
   }
+`;
+
+export const FixedOrderButton = styled.button`
+  position: fixed;
+  bottom: 0;
+  min-width: 720px;
+  height: 64px;
+  background: ${({ theme }) => theme.colors.kakaoYellow};
+  font-size: ${({ theme }) => theme.typography.title1Bold.fontSize};
+  font-weight: ${({ theme }) => theme.typography.title1Bold.fontWeight};
+  border: none;
+  outline: none;
+  z-index: 1000;
+  cursor: pointer;
 `;
