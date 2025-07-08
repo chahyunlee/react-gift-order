@@ -72,14 +72,21 @@ const OrderPage = () => {
     getterNameInput.handleBlur();
     getterPhoneInput.handleBlur();
     messageInput.handleBlur();
+
+    const senderNameError = checkNameValidation(senderNameInput.value);
+    const getterNameError = checkNameValidation(getterNameInput.value);
+    const getterPhoneError = checkPhoneValidation(getterPhoneInput.value);
+    const messageError = checkMessageValidation(messageInput.value);
+
     if (
-      senderNameInput.error ||
-      getterNameInput.error ||
-      getterPhoneInput.error ||
-      messageInput.error
+      senderNameError ||
+      getterNameError ||
+      getterPhoneError ||
+      messageError
     ) {
       return;
     }
+
     window.alert(
       `주문이 완료되었습니다.\n` +
         `상품명: ${product?.name}\n` +
