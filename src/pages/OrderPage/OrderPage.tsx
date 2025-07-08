@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import { cardData } from "@/mockdata/cardData";
 import { OrderCardData } from "@/mockdata/ordercardData";
@@ -33,6 +33,7 @@ import {
 } from "@/utils/checkValidation";
 
 const OrderPage = () => {
+  const navigate = useNavigate();
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const { id } = useParams<{ id: string }>();
@@ -76,6 +77,14 @@ const OrderPage = () => {
     ) {
       return;
     }
+    window.alert(
+      `주문이 완료되었습니다.\n` +
+        `상품명: ${product?.name}\n` +
+        `구매 수량: ${quantity}\n` +
+        `발신자 이름: ${senderNameInput.value}\n` +
+        `메시지: ${messageInput.value}`
+    );
+    navigate("/", { replace: true });
   };
 
   return (
