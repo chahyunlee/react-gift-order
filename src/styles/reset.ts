@@ -43,6 +43,9 @@ const reset = css`
     border-collapse: collapse
     border-spacing: 0
   }
+  body{
+    background: #e1e1e1;
+  }
 `;
 
 export default reset;
