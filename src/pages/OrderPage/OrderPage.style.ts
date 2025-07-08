@@ -108,3 +108,49 @@ export const SectionDivider = styled.div`
   margin: ${({ theme }) => theme.spacing.spacing6} 0;
   width: 100%;
 `;
+
+export const ProductInfoSection = styled.section`
+  padding: 0 ${({ theme }) => theme.spacing.spacing6};
+  margin-top: ${({ theme }) => theme.spacing.spacing6};
+`;
+
+export const ProductCard = styled.div`
+  display: flex;
+  align-items: center;
+  border: 1.5px solid ${({ theme }) => theme.colors.gray400};
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-top: ${({ theme }) => theme.spacing.spacing3};
+`;
+
+export const ProductImage = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: ${({ theme }) => theme.spacing.spacing5};
+`;
+
+export const ProductInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const ProductTitle = styled.div`
+  font-size: ${({ theme }) => theme.typography.body1Bold.fontSize};
+  margin-bottom: ${({ theme }) => theme.spacing.spacing1};
+`;
+
+export const ProductBrand = styled.div`
+  font-size: ${({ theme }) => theme.typography.body2Regular.fontSize};
+  color: ${({ theme }) => theme.colors.gray600};
+  margin-bottom: ${({ theme }) => theme.spacing.spacing5};
+`;
+
+export const ProductPrice = styled.div`
+  font-size: ${({ theme }) => theme.typography.body1Bold.fontSize};
+  b {
+    font-weight: ${({ theme }) => theme.typography.body2Bold.fontWeight};
+  }
+`;

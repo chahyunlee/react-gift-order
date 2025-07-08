@@ -1,4 +1,6 @@
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
+import { useParams } from "react-router-dom";
+import { cardData } from "@/mockdata/cardData";
 import { OrderCardData } from "@/mockdata/ordercardData";
 import {
   ImageListWrapper,
@@ -13,6 +15,13 @@ import {
   InputLabel,
   Input,
   SectionDivider,
+  ProductInfoSection,
+  ProductCard,
+  ProductImage,
+  ProductInfo,
+  ProductTitle,
+  ProductBrand,
+  ProductPrice,
 } from "@/pages/OrderPage/OrderPage.style";
 import { useState } from "react";
 
@@ -20,6 +29,8 @@ const OrderPage = () => {
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [message, setMessage] = useState(OrderCardData[0].defaultTextMessage);
   const [quantity, setQuantity] = useState(1);
+  const { id } = useParams<{ id: string }>();
+  const product = cardData.find((item) => String(item.id) === String(id));
 
   const handleSelectedMessage = (idx: number) => {
     setSelectedIdx(idx);
@@ -60,9 +71,7 @@ const OrderPage = () => {
           placeholder="메시지를 입력해주세요."
         />
       </MainImageWrapper>
-
       <SectionDivider />
-
       <SectionWrapper>
         <SectionTitle>보내는 사람</SectionTitle>
         <InputRow>
@@ -72,9 +81,7 @@ const OrderPage = () => {
           * 실제 선물 발송 시 발신자이름으로 반영되는 정보입니다.
         </SectionDescription>
       </SectionWrapper>
-
       <SectionDivider />
-
       <SectionWrapper>
         <SectionTitle>받는 사람</SectionTitle>
         <InputRow>
@@ -101,6 +108,22 @@ const OrderPage = () => {
           />
         </InputRow>
       </SectionWrapper>
+      <SectionDivider />
+      <ProductInfoSection>
+        <SectionTitle>상품 정보</SectionTitle>
+        {product && (
+          <ProductCard>
+            <ProductImage src={product.imageURL} />
+            <ProductInfo>
+              <ProductTitle>{product.name}</ProductTitle>
+              <ProductBrand>{product.brandInfo.name}</ProductBrand>
+              <ProductPrice>
+                상품가 <b>{product.price.sellingPrice.toLocaleString()}원</b>
+              </ProductPrice>
+            </ProductInfo>
+          </ProductCard>
+        )}
+      </ProductInfoSection>
     </>
   );
 };
