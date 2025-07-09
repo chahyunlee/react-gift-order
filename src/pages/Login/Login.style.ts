@@ -63,4 +63,3 @@ export const ErrorMessage = styled.div`
   font-weight: ${({ theme }) => theme.typography.body2Regular.fontWeight};
   margin-bottom: ${({ theme }) => theme.spacing.spacing1};
 `;
-

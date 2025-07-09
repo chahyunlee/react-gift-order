@@ -21,3 +21,27 @@ export function checkPasswordValidation(password: string): string | null {
   }
   return null;
 }
+
+export function checkNameValidation(name: string): string | null {
+  if (!name.trim()) {
+    return "이름을 입력해주세요.";
+  }
+  return null;
+}
+
+export function checkPhoneValidation(phone: string): string | null {
+  if (!phone.trim()) {
+    return "전화번호를 입력해주세요.";
+  }
+  if (!/^010[0-9]{8}$/.test(phone)) {
+    return "전화번호는 010으로 시작하는 11자리 숫자여야 해요.";
+  }
+  return null;
+}
+
+export function checkMessageValidation(message: string): string | null {
+  if (!message.trim()) {
+    return "메시지를 입력해주세요.";
+  }
+  return null;
+}
