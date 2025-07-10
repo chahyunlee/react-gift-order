@@ -14,6 +14,8 @@ export interface CardProps {
   brand: string;
   name: string;
   price: number;
+  onClick?: () => void;
+
 }
 
 export default function Card({
@@ -22,9 +24,10 @@ export default function Card({
   brand,
   name,
   price,
+  onClick,
 }: CardProps) {
   return (
-    <CardWrapper>
+    <CardWrapper onClick={onClick} style={{ cursor: "pointer" }}>
       <RankNumber>{rank}</RankNumber>
       <Image src={imageUrl} />
       <Info>

@@ -25,3 +25,7 @@ export const Title = styled.h1`
   font-weight: ${({ theme }) => theme.typography.title1Bold.fontWeight};
   line-height: ${({ theme }) => theme.typography.title1Bold.lineHeight};
 `;
+export const UserId = styled.span`
+  font-size: ${({ theme }) => theme.typography.title1Bold.fontSize};
+  font-weight: ${({ theme }) => theme.typography.title1Bold.fontWeight};
+`;

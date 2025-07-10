@@ -9,9 +9,10 @@ export interface CardListProps {
     name: string;
     price: number;
   }[];
+  onCardClick?: (cardId: number) => void;
 }
 
-export default function CardList({ cards }: CardListProps) {
+export default function CardList({ cards, onCardClick }: CardListProps) {
   return (
     <Grid>
       {cards.map((card, idx) => (
@@ -22,6 +23,7 @@ export default function CardList({ cards }: CardListProps) {
           brand={card.brand}
           name={card.name}
           price={card.price}
+          onClick={onCardClick ? () => onCardClick(card.id) : undefined}
         />
       ))}
     </Grid>

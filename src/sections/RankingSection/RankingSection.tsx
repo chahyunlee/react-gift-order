@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { AuthContext } from "@/context/AuthContext";
 import {
   Wrapper,
   Title,
@@ -57,7 +58,17 @@ const RankingSection = () => {
     params.set("rankType", rank);
     setSearchParams(params);
   };
+  
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  const handleCardClick = (cardId: number) => {
+    if (!auth?.user) {
+      navigate("/login", { state: { from: `/order/${cardId}` } });
+    } else {
+      navigate(`/order/${cardId}`);
+    }
+  };
   return (
     <Wrapper>
       <Title>실시간 급상승 선물랭킹</Title>
@@ -79,7 +90,7 @@ const RankingSection = () => {
         onSelect={handleRankSelect}
       />
       <section>
-        <CardList cards={visibleCards} />
+        <CardList cards={visibleCards} onCardClick={handleCardClick} />
         {!showAll && cards.length > MIN_VISIBLE_CARDS && (
           <ShowMoreButton onClick={() => setShowAll(true)}>
             더보기
