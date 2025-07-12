@@ -36,7 +36,7 @@ export const Input = styled.input`
 `;
 
 export const SectionDescription = styled.p`
-  font-size: font-size: ${({ theme }) => theme.typography.body2Regular.fontSize};
+  font-size: ${({ theme }) => theme.typography.body2Regular.fontSize};
   color: ${({ theme }) => theme.colors.gray600};
 `;
 

@@ -12,6 +12,7 @@ import {
 import CardSelectionSection from "@/sections/CardSelectionSection/CardSelectionSection";
 import SenderInfoSection from "@/sections/SenderInfoSection/SenderInfoSection";
 import GetterInfoSection from "@/sections/GetterInfoSection/GetterInfoSection";
+import GroupGettersInfoSection from "@/sections/GroupGettersInfoSection/GroupGettersInfoSection";
 import OrderSummarySection from "@/sections/OrderSummarySection/OrderSummarySection";
 
 const OrderPage = () => {
@@ -95,6 +96,7 @@ const OrderPage = () => {
         onQuantityChange={handleQuantityChange}
         onQuantityBlur={handleQuantityBlur}
       />
+      <GroupGettersInfoSection />
       <OrderSummarySection
         product={product}
         totalPrice={totalPrice}
