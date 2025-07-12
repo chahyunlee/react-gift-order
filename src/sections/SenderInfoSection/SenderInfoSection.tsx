@@ -1,4 +1,5 @@
-import { useInput } from "@/hooks/useInput";
+import { useFormContext } from "react-hook-form";
+import type { FormValues } from "@/pages/OrderPage/OrderPage";
 import {
   SectionWrapper,
   SectionTitle,
@@ -6,13 +7,13 @@ import {
   Input,
   SectionDescription,
   SectionDivider,
-} from "./SenderInfoSection.style";
+} from "@/sections/SenderInfoSection/SenderInfoSection.style";
 
-interface SenderInfoSectionProps {
-  senderNameInput: ReturnType<typeof useInput>;
-}
-
-const SenderInfoSection = ({ senderNameInput }: SenderInfoSectionProps) => {
+const SenderInfoSection = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<FormValues>();
   return (
     <>
       <SectionDivider />
@@ -20,26 +21,18 @@ const SenderInfoSection = ({ senderNameInput }: SenderInfoSectionProps) => {
         <SectionTitle>보내는 사람</SectionTitle>
         <InputRow>
           <Input
+            {...register("senderName", { required: "이름을 입력해주세요." })}
             type="text"
             placeholder="이름을 입력하세요."
-            value={senderNameInput.value}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              senderNameInput.handleInput(e.target.value)
-            }
-            onBlur={senderNameInput.handleBlur}
-            style={
-              senderNameInput.error && senderNameInput.touched
-                ? { borderColor: "#ff3b30" }
-                : {}
-            }
+            style={errors.senderName ? { borderColor: "#ff3b30" } : {}}
           />
         </InputRow>
         <SectionDescription>
           * 실제 선물 발송 시 발신자이름으로 반영되는 정보입니다.
         </SectionDescription>
-        {senderNameInput.error && senderNameInput.touched && (
+        {errors.senderName && (
           <SectionDescription style={{ color: "#ff3b30" }}>
-            {senderNameInput.error}
+            {errors.senderName.message}
           </SectionDescription>
         )}
       </SectionWrapper>

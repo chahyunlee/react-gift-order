@@ -1,3 +1,5 @@
+import { useFormContext } from "react-hook-form";
+import type { FormValues } from "@/pages/OrderPage/OrderPage";
 import {
   ProductInfoSection,
   SectionTitle,
@@ -9,31 +11,24 @@ import {
   ProductPrice,
   FixedOrderButton,
   SectionDivider,
-} from "./OrderSummarySection.style";
+} from "@/sections/OrderSummarySection/OrderSummarySection.style";
 
 interface Product {
   id: number;
   name: string;
   imageURL: string;
-  brandInfo: {
-    name: string;
-  };
-  price: {
-    sellingPrice: number;
-  };
+  brandInfo: { name: string };
+  price: { sellingPrice: number };
 }
 
-interface OrderSummarySectionProps {
+interface Props {
   product: Product | undefined;
-  totalPrice: number;
-  onOrder: () => void;
 }
+const OrderSummarySection = ({ product }: Props) => {
+  const { watch } = useFormContext<FormValues>();
+  const quantity = watch("quantity");
+  const totalPrice = product ? product.price.sellingPrice * quantity : 0;
 
-const OrderSummarySection = ({
-  product,
-  totalPrice,
-  onOrder,
-}: OrderSummarySectionProps) => {
   return (
     <>
       <SectionDivider />
@@ -52,9 +47,7 @@ const OrderSummarySection = ({
           </ProductCard>
         )}
       </ProductInfoSection>
-      <FixedOrderButton onClick={onOrder}>
-        {totalPrice}원 주문하기
-      </FixedOrderButton>
+      <FixedOrderButton type="submit">{totalPrice}원 주문하기</FixedOrderButton>
     </>
   );
 };

@@ -1,4 +1,5 @@
-import { useInput } from "@/hooks/useInput";
+import { useFormContext } from "react-hook-form";
+import type { FormValues } from "@/pages/OrderPage/OrderPage";
 import {
   SectionWrapper,
   SectionTitle,
@@ -7,23 +8,16 @@ import {
   Input,
   SectionDescription,
   SectionDivider,
-} from "./GetterInfoSection.style";
+} from "@/sections/GetterInfoSection/GetterInfoSection.style";
 
-interface GetterInfoSectionProps {
-  getterNameInput: ReturnType<typeof useInput>;
-  getterPhoneInput: ReturnType<typeof useInput>;
-  quantity: number;
-  onQuantityChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onQuantityBlur: () => void;
-}
+const GetterInfoSection = () => {
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext<FormValues>();
 
-const GetterInfoSection = ({
-  getterNameInput,
-  getterPhoneInput,
-  quantity,
-  onQuantityChange,
-  onQuantityBlur,
-}: GetterInfoSectionProps) => {
+  const quantity = watch("quantity");
   return (
     <>
       <SectionDivider />
@@ -33,25 +27,16 @@ const GetterInfoSection = ({
           <InputLabel>이름</InputLabel>
           <div style={{ flex: 1 }}>
             <Input
-              id="getterName"
+              {...register("getterName", { required: "이름을 입력해주세요." })}
               type="text"
               placeholder="이름을 입력하세요."
-              value={getterNameInput.value}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                getterNameInput.handleInput(e.target.value)
-              }
-              onBlur={getterNameInput.handleBlur}
-              style={
-                getterNameInput.error && getterNameInput.touched
-                  ? { borderColor: "#ff3b30" }
-                  : {}
-              }
+              style={errors.getterName ? { borderColor: "#ff3b30" } : {}}
             />
-            {getterNameInput.error && getterNameInput.touched && (
+            {errors.getterName && (
               <SectionDescription
                 style={{ color: "#ff3b30", margin: "4px 0 0 4px" }}
               >
-                {getterNameInput.error}
+                {errors.getterName.message}
               </SectionDescription>
             )}
           </div>
@@ -60,25 +45,18 @@ const GetterInfoSection = ({
           <InputLabel>전화번호</InputLabel>
           <div style={{ flex: 1 }}>
             <Input
-              id="getterPhone"
+              {...register("getterPhone", {
+                required: "전화번호를 입력해주세요.",
+              })}
               type="text"
               placeholder="전화번호를 입력하세요."
-              value={getterPhoneInput.value}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                getterPhoneInput.handleInput(e.target.value)
-              }
-              onBlur={getterPhoneInput.handleBlur}
-              style={
-                getterPhoneInput.error && getterPhoneInput.touched
-                  ? { borderColor: "#ff3b30" }
-                  : {}
-              }
+              style={errors.getterPhone ? { borderColor: "#ff3b30" } : {}}
             />
-            {getterPhoneInput.error && getterPhoneInput.touched && (
+            {errors.getterPhone && (
               <SectionDescription
                 style={{ color: "#ff3b30", margin: "4px 0 0 4px" }}
               >
-                {getterPhoneInput.error}
+                {errors.getterPhone.message}
               </SectionDescription>
             )}
           </div>
@@ -86,13 +64,21 @@ const GetterInfoSection = ({
         <InputRow>
           <InputLabel>수량</InputLabel>
           <Input
-            id="getterCount"
+            {...register("quantity", {
+              valueAsNumber: true,
+              min: { value: 1, message: "1 이상의 수량을 입력해주세요." },
+            })}
             type="number"
             min={1}
             value={quantity}
-            onChange={onQuantityChange}
-            onBlur={onQuantityBlur}
           />
+          {errors.quantity && (
+            <SectionDescription
+              style={{ color: "#ff3b30", margin: "4px 0 0 4px" }}
+            >
+              {errors.quantity.message}
+            </SectionDescription>
+          )}
         </InputRow>
       </SectionWrapper>
     </>

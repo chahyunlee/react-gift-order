@@ -1,5 +1,6 @@
+import { useFormContext } from "react-hook-form";
 import { OrderCardData } from "@/mockdata/ordercardData";
-import { useInput } from "@/hooks/useInput";
+import type { FormValues } from "@/pages/OrderPage/OrderPage";
 import {
   ImageListWrapper,
   Thumbnail,
@@ -7,19 +8,18 @@ import {
   MainImage,
   MessageInput,
   SectionDescription,
-} from "./CardSelectionSection.style";
+} from "@/sections/CardSelectionSection/CardSelectionSection.style";
 
-interface CardSelectionSectionProps {
-  selectedIdx: number;
-  onSelectedMessage: (idx: number) => void;
-  messageInput: ReturnType<typeof useInput>;
-}
+const CardSelectionSection = () => {
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext<FormValues>();
 
-const CardSelectionSection = ({
-  selectedIdx,
-  onSelectedMessage,
-  messageInput,
-}: CardSelectionSectionProps) => {
+  const selectedIdx = watch("selectedIdx");
+
   return (
     <>
       <ImageListWrapper>
@@ -28,28 +28,25 @@ const CardSelectionSection = ({
             key={item.id || idx}
             src={item.thumbUrl}
             selected={selectedIdx === idx}
-            onClick={() => onSelectedMessage(idx)}
+            onClick={() => {
+              setValue("selectedIdx", idx);
+              setValue("message", OrderCardData[idx].defaultTextMessage);
+            }}
           />
         ))}
       </ImageListWrapper>
       <MainImageWrapper>
         <MainImage src={OrderCardData[selectedIdx].imageUrl} />
         <MessageInput
-          value={messageInput.value}
-          onChange={(e) => messageInput.handleInput(e.target.value)}
-          onBlur={messageInput.handleBlur}
+          {...register("message", { required: "메시지를 입력해주세요." })}
           placeholder="메시지를 입력해주세요."
-          style={
-            messageInput.error && messageInput.touched
-              ? { borderColor: "#ff3b30" }
-              : {}
-          }
+          style={errors.message ? { borderColor: "#ff3b30" } : {}}
         />
-        {messageInput.error && messageInput.touched && (
+        {errors.message && (
           <SectionDescription
             style={{ color: "#ff3b30", margin: "4px 0 0 4px" }}
           >
-            {messageInput.error}
+            {errors.message.message}
           </SectionDescription>
         )}
       </MainImageWrapper>
