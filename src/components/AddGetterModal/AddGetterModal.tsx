@@ -16,16 +16,14 @@ interface AddGetterModalProps {
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
-  completeLabel: string;
 }
 
 const AddGetterModal: React.FC<AddGetterModalProps> = ({
   open,
   onClose,
   onConfirm,
-  completeLabel,
 }) => {
-  const { control, clearErrors } = useFormContext<FormValues>();
+  const { control, handleSubmit } = useFormContext<FormValues>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "getters",
@@ -45,7 +43,6 @@ const AddGetterModal: React.FC<AddGetterModalProps> = ({
           onClick={() => {
             if (fields.length < 10) {
               append({ name: "", phone: "", quantity: 1 });
-              clearErrors(`getters.${fields.length}`);
             }
           }}
         >
@@ -59,9 +56,11 @@ const AddGetterModal: React.FC<AddGetterModalProps> = ({
           ))}
         </GetterList>
         <ButtonRow>
-          <CancelButton onClick={onClose}>취소</CancelButton>
-          <ConfirmButton onClick={onConfirm}>
-            {completeLabel}명 완료
+          <CancelButton type="button" onClick={onClose}>
+            취소
+          </CancelButton>
+          <ConfirmButton type="button" onClick={handleSubmit(onConfirm)}>
+            {fields.length}명 완료
           </ConfirmButton>
         </ButtonRow>
       </ModalBox>
