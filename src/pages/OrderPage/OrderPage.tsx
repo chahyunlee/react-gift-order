@@ -5,7 +5,6 @@ import { cardData } from "@/mockdata/cardData";
 import { OrderCardData } from "@/mockdata/ordercardData";
 import CardSelectionSection from "@/sections/CardSelectionSection/CardSelectionSection";
 import SenderInfoSection from "@/sections/SenderInfoSection/SenderInfoSection";
-import GetterInfoSection from "@/sections/GetterInfoSection/GetterInfoSection";
 import GroupGettersInfoSection from "@/sections/GroupGettersInfoSection/GroupGettersInfoSection";
 import OrderSummarySection from "@/sections/OrderSummarySection/OrderSummarySection";
 
@@ -57,7 +56,6 @@ const OrderPage = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardSelectionSection />
           <SenderInfoSection />
-          <GetterInfoSection />
           <GroupGettersInfoSection />
           <OrderSummarySection product={product} />
         </form>

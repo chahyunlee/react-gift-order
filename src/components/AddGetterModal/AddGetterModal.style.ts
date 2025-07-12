@@ -73,3 +73,10 @@ export const ButtonRow = styled.div`
   gap: 8px;
   margin-top: auto;
 `;
+export const GetterList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 60vh;
+  overflow-y: auto;
+`;

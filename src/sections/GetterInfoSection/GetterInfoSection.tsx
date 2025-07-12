@@ -10,19 +10,47 @@ import {
   SectionDivider,
 } from "@/sections/GetterInfoSection/GetterInfoSection.style";
 
-const GetterInfoSection = () => {
+interface GetterInfoSectionProps {
+  index: number;
+  onRemove?: () => void;
+}
+const GetterInfoSection = ({ index, onRemove }: GetterInfoSectionProps) => {
   const {
     register,
     watch,
     formState: { errors },
   } = useFormContext<FormValues>();
 
-  const quantity = watch("quantity");
+  const prefix = `getters.${index}` as const;
+  const quantity = watch(`${prefix}.quantity`);
+
   return (
     <>
       <SectionDivider />
       <SectionWrapper>
-        <SectionTitle>받는 사람</SectionTitle>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <SectionTitle>{`받는 사람 ${index + 1}`}</SectionTitle>
+          {onRemove && (
+            <button
+              type="button"
+              onClick={onRemove}
+              style={{
+                background: "none",
+                border: "none",
+                fontSize: 18,
+                cursor: "pointer",
+              }}
+            >
+              ✕
+            </button>
+          )}
+        </div>
         <InputRow>
           <InputLabel>이름</InputLabel>
           <div style={{ flex: 1 }}>
