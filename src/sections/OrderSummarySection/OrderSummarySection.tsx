@@ -26,8 +26,12 @@ interface Props {
 }
 const OrderSummarySection = ({ product }: Props) => {
   const { watch } = useFormContext<FormValues>();
-  const quantity = watch("quantity");
-  const totalPrice = product ? product.price.sellingPrice * quantity : 0;
+  const getters = watch("getters") || [];
+  const totalQuantity = getters.reduce(
+    (sum, { quantity }) => sum + Number(quantity || 0),
+    0
+  );
+  const totalPrice = product ? product.price.sellingPrice * totalQuantity : 0;
 
   return (
     <>
