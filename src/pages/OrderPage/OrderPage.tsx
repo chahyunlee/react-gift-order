@@ -35,8 +35,7 @@ const OrderPage = () => {
     },
   });
 
-  const { handleSubmit, watch } = methods;
-  const quantity = watch("quantity");
+  const { handleSubmit } = methods;
 
   const onSubmit = (data: FormValues) => {
     window.alert(

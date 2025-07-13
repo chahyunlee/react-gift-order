@@ -29,15 +29,49 @@ export const InputRow = styled.div`
   justify-content: space-between;
   margin-bottom: ${({ theme }) => theme.spacing.spacing3};
 `;
-
 export const GetterList = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 100px;
+  min-height: 100px;
   border: 1.5px solid ${({ theme }) => theme.colors.gray400};
   border-radius: 16px;
+`;
+export const GetterListTable = styled.table`
+  text-align: center;
+  min-height: 100px;
+  border: 1.5px solid ${({ theme }) => theme.colors.gray400};
+  border-radius: 16px;
+
+  width: 100%;
+  border-spacing: 0;
+  margin-top: 12px;
+  overflow: hidden;
+
+  thead {
+    background: #f5f5f5;
+  }
+
+  th {
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  td {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #444;
+    border-bottom: 1px solid #eee;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
 `;
 export const Text = styled.p`
   line-height: 1.2;

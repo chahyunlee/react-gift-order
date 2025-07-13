@@ -30,6 +30,19 @@ const AddGetterModal: React.FC<AddGetterModalProps> = ({
   });
   if (!open) return null;
 
+  const onComplete = handleSubmit(
+    () => {
+      // getters 배열 유효 → 모달 닫기
+      onConfirm();
+    },
+    (errors) => {
+      // 실패했을 때 errors 내부에 getters 에러만 없으면 닫기
+      if (!errors.getters) {
+        onConfirm();
+      }
+      // 아니면 그냥 에러 메시지 노출
+    }
+  );
   return (
     <ModalBackdrop onClick={onClose}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
@@ -59,7 +72,7 @@ const AddGetterModal: React.FC<AddGetterModalProps> = ({
           <CancelButton type="button" onClick={onClose}>
             취소
           </CancelButton>
-          <ConfirmButton type="button" onClick={handleSubmit(onConfirm)}>
+          <ConfirmButton type="button" onClick={onComplete}>
             {fields.length}명 완료
           </ConfirmButton>
         </ButtonRow>

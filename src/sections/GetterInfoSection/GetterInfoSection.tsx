@@ -17,6 +17,7 @@ interface GetterInfoSectionProps {
 const GetterInfoSection = ({ index, onRemove }: GetterInfoSectionProps) => {
   const {
     control,
+    getValues,
     formState: { errors },
   } = useFormContext<FormValues>();
 
@@ -80,18 +81,19 @@ const GetterInfoSection = ({ index, onRemove }: GetterInfoSectionProps) => {
             name={`${prefix}.phone`}
             control={control}
             defaultValue=""
-            rules={{ required: "전화번호를 입력해주세요." }}
-            render={({ field }) => (
-              <Input
-                {...field}
-                placeholder="전화번호를 입력하세요."
-                style={
-                  errors.getters?.[index]?.phone
-                    ? { borderColor: "#ff3b30" }
-                    : {}
-                }
-              />
-            )}
+            rules={{
+              required: "전화번호를 입력해주세요.",
+              pattern: {
+                value: /^010\d{8}$/,
+                message: "01012341234 형태로 입력해주세요.",
+              },
+              validate: (val) => {
+                const phones = getValues("getters").map((g) => g.phone);
+                const dupCount = phones.filter((p) => p === val).length;
+                return dupCount === 1 || "중복된 전화번호입니다.";
+              },
+            }}
+            render={({ field }) => <Input {...field} />}
           />
           {errors.getters?.[index]?.phone && (
             <SectionDescription>
