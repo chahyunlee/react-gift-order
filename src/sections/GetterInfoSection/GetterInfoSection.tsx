@@ -52,54 +52,72 @@ const GetterInfoSection = ({ index, onRemove }: GetterInfoSectionProps) => {
         </div>
         <InputRow>
           <InputLabel>이름</InputLabel>
-          <Controller
-            name={`${prefix}.name`}
-            control={control}
-            defaultValue=""
-            rules={{ required: "이름을 입력해주세요." }}
-            render={({ field }) => (
-              <Input
-                {...field}
-                placeholder="이름을 입력하세요."
-                style={
-                  errors.getters?.[index]?.name
-                    ? { borderColor: "#ff3b30" }
-                    : {}
-                }
-              />
+          <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <Controller
+              name={`${prefix}.name`}
+              control={control}
+              defaultValue=""
+              rules={{ required: "이름을 입력해주세요." }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  placeholder="이름을 입력하세요."
+                  style={
+                    errors.getters?.[index]?.name
+                      ? { borderColor: "#ff3b30" }
+                      : {}
+                  }
+                />
+              )}
+            />
+            {errors.getters?.[index]?.name && (
+              <SectionDescription
+                style={{ color: "#ff3b30", marginTop: 4, marginLeft: 4 }}
+              >
+                {errors.getters[index].name?.message}
+              </SectionDescription>
             )}
-          />
-          {errors.getters?.[index]?.name && (
-            <SectionDescription>
-              {errors.getters[index].name?.message}
-            </SectionDescription>
-          )}
+          </div>
         </InputRow>
         <InputRow>
           <InputLabel>전화번호</InputLabel>
-          <Controller
-            name={`${prefix}.phone`}
-            control={control}
-            defaultValue=""
-            rules={{
-              required: "전화번호를 입력해주세요.",
-              pattern: {
-                value: /^010\d{8}$/,
-                message: "01012341234 형태로 입력해주세요.",
-              },
-              validate: (val) => {
-                const phones = getValues("getters").map((g) => g.phone);
-                const dupCount = phones.filter((p) => p === val).length;
-                return dupCount === 1 || "중복된 전화번호입니다.";
-              },
-            }}
-            render={({ field }) => <Input {...field} />}
-          />
-          {errors.getters?.[index]?.phone && (
-            <SectionDescription>
-              {errors.getters[index].phone?.message}
-            </SectionDescription>
-          )}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <Controller
+              name={`${prefix}.phone`}
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "전화번호를 입력해주세요.",
+                pattern: {
+                  value: /^010\d{8}$/,
+                  message: "01012341234 형태로 입력해주세요.",
+                },
+                validate: (val) => {
+                  const phones = getValues("getters").map((g) => g.phone);
+                  const dupCount = phones.filter((p) => p === val).length;
+                  return dupCount === 1 || "올바른 전화번호 형식이 아니에요.";
+                },
+              }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  placeholder="전화번호를 입력하세요."
+                  style={
+                    errors.getters?.[index]?.phone
+                      ? { borderColor: "#ff3b30" }
+                      : {}
+                  }
+                />
+              )}
+            />
+            {errors.getters?.[index]?.phone && (
+              <SectionDescription
+                style={{ color: "#ff3b30", marginTop: 4, marginLeft: 4 }}
+              >
+                {errors.getters[index].phone?.message}
+              </SectionDescription>
+            )}
+          </div>
         </InputRow>
         <InputRow>
           <InputLabel>수량</InputLabel>
