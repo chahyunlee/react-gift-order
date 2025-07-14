@@ -7,7 +7,6 @@ import {
   InputLabel,
   Input,
   SectionDescription,
-  SectionDivider,
 } from "@/sections/GetterInfoSection/GetterInfoSection.style";
 
 interface GetterInfoSectionProps {
@@ -25,7 +24,6 @@ const GetterInfoSection = ({ index, onRemove }: GetterInfoSectionProps) => {
 
   return (
     <>
-      <SectionDivider />
       <SectionWrapper>
         <div
           style={{

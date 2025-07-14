@@ -39,9 +39,3 @@ export const SectionDescription = styled.p`
   font-size: ${({ theme }) => theme.typography.body2Regular.fontSize};
   color: ${({ theme }) => theme.colors.gray600};
 `;
-
-export const SectionDivider = styled.hr`
-  border: none;
-  height: 12px;
-  background-color: ${({ theme }) => theme.colors.gray100};
-`;

@@ -30,7 +30,7 @@ const CardSelectionSection = () => {
             selected={selectedIdx === idx}
             onClick={() => {
               setValue("selectedIdx", idx);
-              setValue("message", OrderCardData[idx].defaultTextMessage);
+              setValue("cardMessage", OrderCardData[idx].defaultTextMessage);
             }}
           />
         ))}
@@ -38,15 +38,15 @@ const CardSelectionSection = () => {
       <MainImageWrapper>
         <MainImage src={OrderCardData[selectedIdx].imageUrl} />
         <MessageInput
-          {...register("message", { required: "메시지를 입력해주세요." })}
+          {...register("cardMessage", { required: "메시지를 입력해주세요." })}
           placeholder="메시지를 입력해주세요."
-          style={errors.message ? { borderColor: "#ff3b30" } : {}}
+          style={errors.cardMessage ? { borderColor: "#ff3b30" } : {}}
         />
-        {errors.message && (
+        {errors.cardMessage && (
           <SectionDescription
             style={{ color: "#ff3b30", margin: "4px 0 0 4px" }}
           >
-            {errors.message.message}
+            {errors.cardMessage.message}
           </SectionDescription>
         )}
       </MainImageWrapper>

@@ -39,6 +39,7 @@ export const Text = styled.p`
 export const AddGetterButton = styled.button`
   width: 80px;
   height: 40px;
+  min-height: 40px;
   border: none;
   border-radius: 8px;
   font-size: ${({ theme }) => theme.typography.body2Bold.fontSize};
@@ -77,6 +78,5 @@ export const GetterList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-height: 60vh;
   overflow-y: auto;
 `;

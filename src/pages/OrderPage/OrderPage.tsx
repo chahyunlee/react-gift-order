@@ -11,10 +11,8 @@ import OrderSummarySection from "@/sections/OrderSummarySection/OrderSummarySect
 export type FormValues = {
   selectedIdx: number;
   senderName: string;
-  getterName: string;
-  getterPhone: string;
   quantity: number;
-  message: string;
+  cardMessage: string;
   getters: { name: string; phone: string; quantity: number }[];
 };
 
@@ -27,10 +25,8 @@ const OrderPage = () => {
     defaultValues: {
       selectedIdx: 0,
       senderName: "",
-      getterName: "",
-      getterPhone: "",
       quantity: 1,
-      message: OrderCardData[0].defaultTextMessage,
+      cardMessage: OrderCardData[0].defaultTextMessage,
       getters: [],
     },
   });
@@ -43,7 +39,7 @@ const OrderPage = () => {
         `상품명: ${product?.name}\n` +
         `구매 수량: ${data.quantity}\n` +
         `발신자 이름: ${data.senderName}\n` +
-        `메시지: ${data.message}`
+        `메시지: ${data.cardMessage}`
     );
     navigate("/", { replace: true });
   };

@@ -45,12 +45,14 @@ const GroupGettersInfoSection = () => {
             {displayGetters.length > 0 ? "수정" : "추가"}
           </AddGetterButton>
         </InputRow>
-        <AddGetterModal
-          open={isModalOpen}
-          initialGetters={modalGetters}
-          onClose={() => setIsModalOpen(false)}
-          onConfirm={handleConfirm}
-        />
+        {isModalOpen && (
+          <AddGetterModal
+            open={isModalOpen}
+            initialGetters={modalGetters}
+            onClose={() => setIsModalOpen(false)}
+            onConfirm={handleConfirm}
+          />
+        )}
 
         {displayGetters.length > 0 && (
           <GetterListTable as="table">
