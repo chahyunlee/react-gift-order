@@ -1,4 +1,5 @@
-import { useFormContext, useFieldArray } from "react-hook-form";
+import { useEffect } from "react";
+import { useForm, useFieldArray, FormProvider } from "react-hook-form";
 import GetterInfoSection from "@/sections/GetterInfoSection/GetterInfoSection";
 import type { FormValues } from "@/pages/OrderPage/OrderPage";
 import {
@@ -12,72 +13,83 @@ import {
   ButtonRow,
   GetterList,
 } from "@/components/AddGetterModal/AddGetterModal.style";
+
+type Getter = FormValues["getters"][number];
+
+interface ModalForm {
+  getters: Getter[];
+}
+
 interface AddGetterModalProps {
   open: boolean;
+  initialGetters: Getter[];
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (newGetters: Getter[]) => void;
 }
 
 const AddGetterModal: React.FC<AddGetterModalProps> = ({
   open,
+  initialGetters,
   onClose,
   onConfirm,
 }) => {
-  const { control, handleSubmit } = useFormContext<FormValues>();
+  const methods = useForm<ModalForm>({
+    defaultValues: { getters: initialGetters },
+  });
+  const { control, handleSubmit, reset } = methods;
+
   const { fields, append, remove } = useFieldArray({
     control,
     name: "getters",
   });
+
+  useEffect(() => {
+    reset({ getters: initialGetters });
+  }, [initialGetters, reset]);
+
+  const onSubmit = (data: ModalForm) => {
+    onConfirm(data.getters);
+  };
+
   if (!open) return null;
 
-  const onComplete = handleSubmit(
-    () => {
-      // getters 배열 유효 → 모달 닫기
-      onConfirm();
-    },
-    (errors) => {
-      // 실패했을 때 errors 내부에 getters 에러만 없으면 닫기
-      if (!errors.getters) {
-        onConfirm();
-      }
-      // 아니면 그냥 에러 메시지 노출
-    }
-  );
   return (
-    <ModalBackdrop onClick={onClose}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <SectionTitle>받는 사람</SectionTitle>
-        <Text>
-          * 최대 10명까지 추가 할 수 있어요.
-          <br />* 받는 사람의 전화번호를 중복으로 입력할 수 없어요.
-        </Text>
-        <AddGetterButton
-          type="button"
-          onClick={() => {
-            if (fields.length < 10) {
-              append({ name: "", phone: "", quantity: 1 });
+    <FormProvider {...methods}>
+      <ModalBackdrop onClick={onClose}>
+        <ModalBox onClick={(e) => e.stopPropagation()}>
+          <SectionTitle>받는 사람</SectionTitle>
+          <Text>
+            * 최대 10명까지 추가 할 수 있어요.
+            <br />* 받는 사람의 전화번호를 중복으로 입력할 수 없어요.
+          </Text>
+          <AddGetterButton
+            type="button"
+            onClick={() =>
+              fields.length < 10 && append({ name: "", phone: "", quantity: 1 })
             }
-          }}
-        >
-          추가하기
-        </AddGetterButton>
-        <GetterList>
-          {fields.map((field, index) => (
-            <div key={field.id}>
-              <GetterInfoSection index={index} onRemove={() => remove(index)} />
-            </div>
-          ))}
-        </GetterList>
-        <ButtonRow>
-          <CancelButton type="button" onClick={onClose}>
-            취소
-          </CancelButton>
-          <ConfirmButton type="button" onClick={onComplete}>
-            {fields.length}명 완료
-          </ConfirmButton>
-        </ButtonRow>
-      </ModalBox>
-    </ModalBackdrop>
+          >
+            추가하기
+          </AddGetterButton>
+          <GetterList>
+            {fields.map((field, idx) => (
+              <GetterInfoSection
+                key={field.id}
+                index={idx}
+                onRemove={() => remove(idx)}
+              />
+            ))}
+          </GetterList>
+          <ButtonRow>
+            <CancelButton type="button" onClick={onClose}>
+              취소
+            </CancelButton>
+            <ConfirmButton type="button" onClick={handleSubmit(onSubmit)}>
+              {fields.length}명 완료
+            </ConfirmButton>
+          </ButtonRow>
+        </ModalBox>
+      </ModalBackdrop>
+    </FormProvider>
   );
 };
 
