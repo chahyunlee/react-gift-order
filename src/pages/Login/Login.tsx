@@ -1,3 +1,4 @@
+
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import logo from "@/assets/images/logo.png";
@@ -27,6 +28,13 @@ const LoginPage = () => {
     handlePasswordBlur,
     isValid,
   } = useLoginFormValidation();
+
+  useEffect(() => {
+    if (auth?.user) {
+      const redirectTo = location.state?.from || RouterPath.MYPAGE;
+      navigate(redirectTo, { replace: true });
+    }
+  }, [auth, navigate, location.state]);
 
   const handleLoginClick = (e: React.FormEvent) => {
     e.preventDefault();

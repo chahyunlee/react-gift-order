@@ -40,10 +40,11 @@ const OrderPage = () => {
         `구매 수량: ${data.quantity}\n` +
         `발신자 이름: ${data.senderName}\n` +
         `메시지: ${data.cardMessage}`
+
     );
     navigate("/", { replace: true });
   };
-
+  
   return (
     <>
       <NavigationBar />
