@@ -1,9 +1,8 @@
 
-import { useContext, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { RouterPath } from "@/routes/path";
+import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import logo from "@/assets/images/logo.png";
+import { useAuthRedirect } from "@/hooks/useAuthRedirect";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import {
   Wrapper,
@@ -17,8 +16,7 @@ import { useLoginFormValidation } from "@/hooks/useLoginFormValidation";
 
 const LoginPage = () => {
   const auth = useContext(AuthContext);
-  const navigate = useNavigate();
-  const location = useLocation();
+  useAuthRedirect();
   const {
     email,
     password,
@@ -42,8 +40,6 @@ const LoginPage = () => {
     e.preventDefault();
     if (isValid && auth) {
       auth.login({ email });
-      const redirectTo = location.state?.from || RouterPath.MYPAGE;
-      navigate(redirectTo, { replace: true });
     }
   };
 
